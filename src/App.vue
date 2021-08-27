@@ -1,16 +1,70 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+ 
+ <navbar :Admin="admin" :Auth="isAuth" @logout="isAuth = false"  ></navbar>
+
+  <router-view @log="isAuth = true" />
+
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Navbar from "./components/Navbar.vue";
+import gql from "graphql-tag";
+import jwt_decode from 'jwt-decode';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+
+  components:{
+    Navbar
+  },
+  data(){
+    return{
+      isAuth:false,
+      admin:false
+    }
+  },
+    created() {
+    if (localStorage.getItem('access')) {
+      this.isAuth = true
+      this.refreshToken()
+     
+     
+
+    } else {
+      this.$router.push({ name: 'UserAuth' })
+    }
+  },
+
+    methods: {
+    async refreshToken() {
+      await this.$apollo.mutate({
+        mutation: gql `
+          mutation ($refreshToken: String!) {
+            refreshToken(refresh: $refreshToken) {
+              access
+            }
+          }
+        `,
+        variables: {
+          refreshToken: localStorage.getItem('refresh')
+        }
+      }).then(result => {
+        console.log(result.data.refreshToken)
+        this.isAuth = true
+        localStorage.setItem('access', result.data.refreshToken.access)
+        this.admin = jwt_decode(localStorage.getItem('access')).admin
+        
+       
+      }).catch(() => {
+        alert('ERROR: Invalid token!')
+        this.isAuth = false
+        this.$router.push({ name: 'UserAuth' })
+      })
+    }
   }
+  
+
 }
 </script>
 
@@ -21,6 +75,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width:100vw;
+  max-width:100%;
+  height: 100vh;
 }
+
+
 </style>
