@@ -13,7 +13,7 @@ import { setContext } from 'apollo-link-context'
 const emitter = mitt();
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/",
+  uri: "https://api-gateway-ecommerce.herokuapp.com/",
 });
 
 

@@ -4,7 +4,7 @@ module.exports = {
       service: {
         name: 'vue-ecommerce',
         // URL to the GraphQL API
-        url: 'http://localhost:4000/',
+        url: 'https://api-gateway-ecommerce.herokuapp.com/',
       },
       // Files processed by the extension
       includes: [
