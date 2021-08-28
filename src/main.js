@@ -8,6 +8,7 @@ import {
 } from "@apollo/client/core";
 import { createApolloProvider } from "@vue/apollo-option";
 import mitt from "mitt";
+import { setContext } from 'apollo-link-context'
 
 const emitter = mitt();
 
@@ -15,8 +16,19 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/",
 });
 
+
+const authLink = setContext((request, { headers }) => {
+  return {
+      headers: {
+          ...headers,
+          'Authorization': localStorage.getItem('access') || ''
+      }
+  }
+})
+
+
 const apolloClient = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

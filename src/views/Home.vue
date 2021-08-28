@@ -13,6 +13,7 @@
       :img="product.quantity"
       :description="product.description"
       :price="product.price"
+      @addCart="addCart($event)"
       ></product-card>
       
 
@@ -35,56 +36,17 @@ export default {
   },
   data(){
     return{
-      products_:[],
       products:[]
     }
   },
   created(){
-    this.products_ = [
-      {
-        name:"Product 1",
-        quantity:12,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-        price:12000
-      },
-      {
-        name:"Product 2",
-        quantity:5,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-         price:12000
-      },
-      {
-        name:"Product 3",
-        quantity:1,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-         price:12000
-      },
-      {
-        name:"Product 6",
-        quantity:12,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-         price:12000
-      },
-      {
-        name:"Product 6",
-        quantity:12,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-         price:12000
+    
 
-      },
-      {
-        name:"Product 6",
-        quantity:12,
-        img:"https://icdn.dtcn.com/image/digitaltrends_es/mejores-celulares-camara-huawei-p40-pro-416x416.jpg",
-        description:"Producto 1 ",
-         price:12000
-      }
-    ]
+  },
+  methods:{
+    addCart(event){
+      console.log(event);
+    }
 
   },
   apollo:{
