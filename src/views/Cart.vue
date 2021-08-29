@@ -1,8 +1,11 @@
 <template>
   <div class="cart-container">
+      <div class="cart">
+
+      <h2 class="cart-title">Carrito  </h2>
 
     <cart-card
-  class="cart-container"
+ 
   v-for="(cart,key) in orderByUserAndStatus" :key="key"
   :userId="cart.userId"
   :orderId="cart.orderId"
@@ -11,10 +14,14 @@
   :total="cart.total"
   :detailProducts="cart.detailProducts"
   :status="cart.status"
+  @editCart="editCart"
+  @deleteCart="deleteCart"
   
   ></cart-card>
-
-
+      <div class="empty-cart" v-if="orderByUserAndStatus.length == 0">
+            <h2>Aun no has agregado ningun producto a tu carrito</h2>
+         </div>
+      </div>
      
   </div>
 </template>
@@ -22,6 +29,7 @@
 <script>
 import { gql } from "graphql-tag";
 import CartCard from "../components/CartCard.vue";
+import {addToCart,deleteProduct} from "../helpers/addToCart";
 export default {
   name: "Cart",
   components:{
@@ -29,14 +37,15 @@ export default {
   },
   data(){
     return{
-      orderByUserAndStatus:[]
-         
+      
     }
   },
   created(){
-  
+    console.log("creado");
+    this.init();
   },
   apollo:{
+    
     orderByUserAndStatus:{
       query: gql ` query  ($orderByUserAndStatusId: String, $orderByUserAndStatusStatus: String) {
       orderByUserAndStatus(id: $orderByUserAndStatusId, status: $orderByUserAndStatusStatus)
@@ -59,16 +68,26 @@ export default {
         variables:{
         orderByUserAndStatusId:localStorage.getItem('userId'),
         orderByUserAndStatusStatus:"In Progress"
-       }
+       },
+       fetchPolicy:'cache-and-network'
     }
     
 
   },
   methods:{
-    /*async init(){
+    editCart(data){
+      const edited =  addToCart(data,JSON.parse(JSON.stringify(this.orderByUserAndStatus[0])))
+    this.updateCart(edited);
+   },
+   deleteCart(id){
+    
+     const deleteProd = deleteProduct(id,JSON.parse(JSON.stringify(this.orderByUserAndStatus[0])))
+    this.updateCart(deleteProd);
+   },
+    async init(){
        await this.$apollo.query({
       query: gql `
-      query  ($orderByUserAndStatusId: String, $orderByUserAndStatusStatus: String) {
+       query  ($orderByUserAndStatusId: String, $orderByUserAndStatusStatus: String) {
       orderByUserAndStatus(id: $orderByUserAndStatusId, status: $orderByUserAndStatusStatus)
        {
         userId
@@ -77,22 +96,60 @@ export default {
         total
         detailProducts {
           idProduct
+          name
           quantity
           price
           subTotal
         }
         status
         }
-        
         }`,
         variables:{
         orderByUserAndStatusId:localStorage.getItem('userId'),
         orderByUserAndStatusStatus:"In Progress"
        }
-    }).then((data)=>{})
+    }).then((data)=>{
+      console.log("d",data);
+      this.orderByUserAndStatusId =data.data.orderByUserAndStatus[0]
+      console.log(this.orderByUserAndStatusId);
+      })
     .catch(err => console.log("erro",err))
     
-  }*/
+  },
+  async updateCart(Cart){
+    console.log(Cart);
+    await this.$apollo.mutate({
+      mutation: gql`
+      mutation ($updateOrderId: String, $updateOrderOrder: UpdateOrder) {
+      updateOrder(id: $updateOrderId, order: $updateOrderOrder) {
+      userId
+      orderId
+      date
+      total
+      detailProducts {
+        subTotal
+        idProduct
+        name
+        quantity
+        price
+        }
+      status
+      }
+    }
+     `,
+        variables:{
+          updateOrderId:Cart.orderId,
+          updateOrderOrder:Cart     
+      }
+    }).then(
+      (data)=> {
+           this.$apollo.queries.orderByUserAndStatus.refresh()
+      }
+    ).catch(
+      (err)=> console.log(err)
+    )
+  }
+
   }
 
 };
@@ -100,10 +157,15 @@ export default {
 
 <style>
 
+
+.empty-cart{
+  padding:10%;
+ 
+}
 .cart-container{
   display:flex;
   flex-direction: column;
-
+ 
 
 }
 

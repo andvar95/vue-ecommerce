@@ -1,26 +1,33 @@
 <template>
-  <div class="cart">
 
-      <div class="cart-title">Carrito  </div>
       <div v-for="(detail,key) in detailProducts" :key="key"  class="cart-products">
         
         <div class="cart-p-item">
            <div> {{detail.name}} </div> 
             <div>${{detail.price}} </div>
         </div>
-        <div class="cart-p-item">
-            <div>Cantidad: <input type="number" min="0" v-model=detail.quantity></div>
+        <div class="cart-p-item horizontal">
+            <div>
+            <div>Cantidad: <input 
+            type="number"
+             min="0" 
+             v-model="detail.quantity"
+             v-on:input="updateProduct($event,detail.idProduct)"
+             ></div>
             <div>Subtotal:{{detail.subTotal}} </div>
+            </div>
+                <div><button  v-on:click="deleteProduct(detail.idProduct)">Borrar </button></div>
         </div>
+        
         
           
       </div>
 
     <div class="cart-products">
      <div class="total"><h3>Total:${{total}}</h3></div>
-            <div class="update-container"> <button>Guardar </button> </div>
+            <div class="update-container"> <button>Finalizar Compra </button> </div>
     </div>
-  </div>
+  
 </template>
 
 <script>
@@ -33,7 +40,25 @@ export default {
          date:String,
          total:String,
          detailProducts:[],
-         status:String
+         status:String,
+       
+    },
+    methods:{
+        updateProduct(event,id){
+        
+        console.log(event.target.value);
+
+        if(event.target.value) this.$emit('editCart',{quantity:parseInt(event.target.value), id:id})
+    
+        },
+        deleteProduct(id){
+                console.log(id);
+            this.$emit('deleteCart',id)
+
+        }
+
+
+        
     }
 
 }
@@ -41,7 +66,9 @@ export default {
 
 <style>
 
-
+.horizontal{
+    display: flex;
+}
 .update-container, .total{
     display: flex;
     justify-content: center;
@@ -51,7 +78,7 @@ export default {
 
 .update-container button{
     background: #3838e4;
-    padding:25%;
+    padding:2% 5%;
     border:none;
     font-size: 1.2rem;
     color:white;
@@ -60,22 +87,20 @@ export default {
 
 
 .cart{
-    border:1px solid rgb(80, 80, 80);
+    border:1px solid rgb(175, 175, 175);
     border-radius: 5px;
     max-width: 60%;
     width:60%;
     margin: 5% auto;
     padding:2%;
-    
-
+    background-color: white;
+    min-height: 10vw;;
 }
 
 .cart-title{
- 
     border-bottom: 1px solid rgb(83, 83, 83);
     padding:1% 10%;
     display: flex;
-    font-size: 1.3rem;
 }
 
 

@@ -79,17 +79,7 @@ export default {
   align-items: center;
 }
 
-.container_auth_user {
-  border: 1px solid black;
-  border-radius: 10px;
-  width: 25%;
-  height: 60%;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 .auth_user h2 {
   color: #283747;

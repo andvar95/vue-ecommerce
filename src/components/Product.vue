@@ -1,22 +1,31 @@
 <template>
+    <div  class="single-product-container">
+   
+    <div class="product-img">
+        <img  src="https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg" alt="s">
+    </div>
+    
+    <div v-if="name" class="product-description">
+        <div> <h1> {{name}} </h1> </div>
+            <div class="product-price">${{price}} </div>
+            <div class="product-cart"><input v-model="cartQuantity" class="number-poducts" type="number"> <button v-on:click="addProduct()" class="cart-button">Adicionar al Carrito </button></div>
+             
+            <div class="pro-desc">{{description}}</div>
+            
+    </div>
 
-<div class="product">
-    
-    <div><img src="https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg"> </div>
-    <h5 @click="goToProduct(id)">{{name}}</h5>
-    <div>Stock: {{quantity}}</div>
-    <h3>${{price}}</h3>
-    <div class="cart-add"> <input v-model="cartQuantity" min="0" type="number">   <button @click="addProduct()" class="cart-button">Add to Cart</button></div>
-    
-</div>
-  
+ <div class="single-product-container" v-if="!name">Espere Por favor </div>
+      
+    </div>
+
+       
+      
 </template>
 
 <script>
-
 import gql from 'graphql-tag';
 export default {
-    name:"ProductCard",
+    name:'Product',
     props:{
         id:String,
         name:String,
@@ -30,13 +39,10 @@ export default {
         return{
             cartQuantity:0
         }
-
     },
     methods:{
-        goToProduct(id){
-            this.$router.push({path:`/product/${id}`})
-        },
         async addProduct(){
+            console.log(this.cartQuantity);
        if(this.cartQuantity>0)  {
            await  this.$apollo.mutate({
                mutation: gql `
@@ -73,47 +79,67 @@ export default {
             console.log("No puedo");
         }
         }
+    
     }
+
 
 }
 </script>
 
 <style>
 
-.product{
-    width:20%;   
+.single-product-container{
+    margin:5% auto;
     background-color: white;
+    width:50vw;
+    height:70vh;
+    display: flex;
+    padding: 1%;
 }
 
-.cart-add{
-    display:flex;
-    justify-content: space-around;
-    margin-bottom:5%;
-    max-width:100%;
-    width:100%;
+.product-img img {
+    height: 70vh;
 }
 
-input[type=number]{
-    width:20%;
+.product-img{
+    width:40%;
+    height: 100%;
+}
+
+.product-description{
+    width:60%;
+    display: flex;
+    flex-direction: column;
+    justify-self: self;
+}
+
+.pro-desc{
+    border-top: 1px solid gainsboro;
+    width: 90%;
+    margin:2%;
+    align-self: flex-start;
+    padding: 3% 0;
+}
+
+.product-price{
+    font-size: 1.8rem;
+    align-self:flex-start;
+    padding:5%
+
+}
+.cart-button{
+     font-size: 1.2rem;
+}
+.product-cart{
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
    
-    outline: none;
 }
 
-   img{
-     border-radius: 5px 5px 0 0 ;
-       width:100%;
-   }
+.number-poducts{
+    height: 5vh;
+    width:3vw;
+}
 
-   .cart-button{
-      width: 60%;
-       padding:4%;
-       border-radius:10px;
-       border:none;
-       background-color: #3838e4;
-       color:white;
-   }
-
-   button:hover{
-       background-color:#5c5cdd ;
-   }
 </style>

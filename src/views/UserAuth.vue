@@ -94,10 +94,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .container_auth_user {
-  border:1px solid black;
+    background-color: white;
+  border:1px solid rgb(212, 212, 212);
   border-radius: 10px;
   width: 30%;
   height: 60%;

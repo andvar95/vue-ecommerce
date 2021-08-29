@@ -40,7 +40,7 @@ export default {
     }
   },
   created(){
-    
+    this.$apollo.queries.allProducts.refresh()
 
   },
   methods:{
@@ -77,6 +77,7 @@ export default {
     flex-wrap: wrap;
     width:100vw;
     max-width: 100%;
+  
    
   
   }
