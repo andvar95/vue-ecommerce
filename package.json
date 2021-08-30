@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.7",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@vue/apollo-composable": "^4.0.0-alpha.14",
     "@vue/apollo-option": "^4.0.0-alpha.14",
     "apollo-link-context": "^1.0.20",

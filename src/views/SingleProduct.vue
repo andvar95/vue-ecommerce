@@ -1,5 +1,5 @@
 <template>
-
+<div class="pad-1">
    <product
     :id="product.product_Id"
     :name="product.name"
@@ -10,7 +10,7 @@
 
    >
    </product>
-   
+</div>
 </template>
 
 <script>
@@ -53,8 +53,7 @@ methods:{
         category
         price
     }
-    }
-            
+    }        
         `,variables:{
             productByProdIdProductId:this.id
         }

@@ -9,6 +9,9 @@ import {
 import { createApolloProvider } from "@vue/apollo-option";
 import mitt from "mitt";
 import { setContext } from 'apollo-link-context'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 
 const emitter = mitt();
 

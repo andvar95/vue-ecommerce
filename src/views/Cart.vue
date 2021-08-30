@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-container">
+  <div class="cart-container pad-1">
       <div class="cart">
 
       <h2 class="cart-title">Carrito  </h2>

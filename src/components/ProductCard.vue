@@ -2,11 +2,15 @@
 
 <div class="product">
     
-    <div><img src="https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg"> </div>
+    <div><img v-bind:src="image"> </div>
     <h5 @click="goToProduct(id)">{{name}}</h5>
-    <div>Stock: {{quantity}}</div>
+    <div v-if="quantity==0">No hay Stock </div>
+    <div v-else>Stock: {{quantity}}</div>
     <h3>${{price}}</h3>
-    <div class="cart-add"> <input v-model="cartQuantity" min="0" type="number">   <button @click="addProduct()" class="cart-button">Add to Cart</button></div>
+    <div class="cart-add"> 
+        <input :disabled="quantity==0" v-model="cartQuantity" min="0" type="number">   
+    <button :disabled="quantity==0" @click="addProduct()" class="cart-button">Add to Cart</button>
+    </div>
     
 </div>
   
@@ -28,7 +32,8 @@ export default {
     },
     data(){
         return{
-            cartQuantity:0
+            cartQuantity:0,
+            image:"https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg"
         }
 
     },
@@ -66,11 +71,13 @@ export default {
                             subTotal: this.price*this.cartQuantity} }
            }).then((data)=>{
                console.log(data)
+                    this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
            }).catch((err)=>console.log(err))
            
         }
         else{
             console.log("No puedo");
+             this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
         }
         }
     }

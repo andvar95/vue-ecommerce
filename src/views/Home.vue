@@ -1,10 +1,6 @@
 <template>
-  <div class="home">
-
-    
+  <div class="home pad-1">    
     <div class="product-container" >
-      
-
       <product-card
       v-for="(product,key) in allProducts" :key="key"
       :id="product.product_Id"
@@ -13,38 +9,52 @@
       :img="product.quantity"
       :description="product.description"
       :price="product.price"
-      @addCart="addCart($event)"
+      @addProductCart="addProductCart($event)"
       ></product-card>
       
-
+  <message-card v-if="messageFlag" :message="messageContent"> </message-card>
     </div>
- 
+
   </div>
+
+ 
 </template>
 
 <script>
 // @ is an alias to /src
 import ProductCard from "../components/ProductCard.vue";
+import MessageCard from "../components/MessageCard.vue";
 import gql from "graphql-tag"
 export default {
 
 
   name: 'Home',
   components: {
-    ProductCard
+    ProductCard,
+    MessageCard
     
   },
   data(){
     return{
-      products:[]
+      products:[],
+      messageFlag:false,
+      messageContent:{}
     }
   },
   created(){
+    console.log("creado");
     this.$apollo.queries.allProducts.refresh()
 
   },
   methods:{
-    addCart(event){
+    addProductCart(event){
+
+      this.messageFlag = true
+      this.messageContent = event
+      setTimeout(()=>{
+        this.messageFlag = false
+      },2000)
+
       console.log(event);
     }
 

@@ -16,7 +16,7 @@
              ></div>
             <div>Subtotal:{{detail.subTotal}} </div>
             </div>
-                <div><button  v-on:click="deleteProduct(detail.idProduct)">Borrar </button></div>
+                <div><div  v-on:click="deleteProduct(detail.idProduct)"><i class="fas fa-trash-alt fa-2x delete-icon"></i> </div></div>
         </div>
         
         
@@ -85,7 +85,9 @@ export default {
     border-radius: 5px;
 }
 
-
+.delete-icon:hover{
+    color:red;
+}
 .cart{
     border:1px solid rgb(175, 175, 175);
     border-radius: 5px;

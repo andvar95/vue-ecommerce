@@ -54,6 +54,8 @@ export default {
         this.isAuth = true
         localStorage.setItem('access', result.data.refreshToken.access)
         this.admin = jwt_decode(localStorage.getItem('access')).admin
+
+        
         
        
       }).catch(() => {
@@ -83,5 +85,9 @@ export default {
 
 }
 
+
+.pad-1{
+  padding: 5% 0;
+}
 
 </style>

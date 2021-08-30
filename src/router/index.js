@@ -6,7 +6,7 @@ import SingleProduct from "../views/SingleProduct.vue";
 import Profile from "../views/Profile.vue";
 import Shops from "../views/Shops.vue";
 import Cart from "../views/Cart.vue";
-
+import AdminUser from "../views/AdminUser.vue";
 
 const routes = [
   {
@@ -49,6 +49,11 @@ const routes = [
     path:'/shops',
     name:'Shops',
     component:Shops
+  },
+  {
+    path:'/admin/user',
+    name:'AdminUser',
+    component:AdminUser
   }
 
 ]
