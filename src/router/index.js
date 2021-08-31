@@ -7,7 +7,7 @@ import Profile from "../views/Profile.vue";
 import Shops from "../views/Shops.vue";
 import Cart from "../views/Cart.vue";
 import Product from "../views/Product.vue";
-
+import AdminUser from "../views/AdminUser.vue";
 
 const routes = [
   {
@@ -55,6 +55,11 @@ const routes = [
     path:'/product',
     name:'Product',
     component:Product
+  },
+  {
+    path:'/admin/user',
+    name:'AdminUser',
+    component:AdminUser
   }
 
 ]

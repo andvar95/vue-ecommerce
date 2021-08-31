@@ -3,14 +3,12 @@
     <div class="logo">Logo </div>
     
     <div v-if="Auth"  class="options"> 
-    <a v-if="Admin">Administrador </a>
-    <router-link to="/Home">Home</router-link> 
-    <router-link to="/shops">Compras</router-link> 
-    <router-link to="/cart">Carrito</router-link> 
-    <router-link to="/profile">Perfil</router-link> 
-    <router-link to="/about">About</router-link>
-    <router-link to="/product">Producto</router-link>
-     <a @click="logout">Logout</a>
+    <a v-if="Admin"><i class="fas fa-users-cog fa-2x icon"></i></a>
+    <router-link to="/Home"><i class="fas fa-home fa-2x icon"></i></router-link> 
+    <router-link to="/shops"><i class="fas fa-shopping-bag fa-2x icon"></i></router-link> 
+    <router-link to="/cart"><i class="fas fa-cart-plus fa-2x icon"></i></router-link> 
+    <router-link to="/profile"><i class="fas fa-user fa-2x icon"></i></router-link> 
+     <a @click="logout"><i class="fas fa-sign-out-alt fa-2x icon"></i></a>
     </div>
   </div>
   
@@ -50,8 +48,11 @@ a:hover{
   display: flex;
   justify-content: space-between;
   background-color:#009999 ;
-  border:1px solid black;
   color:white;
+  position: fixed;
+  width:100%;
+  max-width:100%;
+ 
 }
 .options{
     display:flex;
@@ -60,9 +61,15 @@ a:hover{
 
 .options > * {
     display:block; 
-    padding: 15px 20px;
+    padding: 20px 25px;
+   
 }
 
+
+.icon:hover{
+
+  transform: scale(1.2);
+}
 .logo{
    display:block; 
     padding: 15px 20px; 
