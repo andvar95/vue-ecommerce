@@ -1,74 +1,64 @@
 <template>
-  <div id="CreateProd" class="create_prod">
-    <div class="container_create_prod">
-      <h3>Crear Producto</h3>
-
-      <form v-on:submit.stop.prevent="processCreateProd">
-        <input type="text" v-model="product_in" placeholder="Nombre" />
-        <br />
-        <input type="text" v-model="product_in" placeholder="Descripcion" />
-        <br />
-        <input type="number" v-model="product_in" placeholder="Cantidad" />
-        <br />
-        <select v-model="selected" placeholder="Cantidad">
-          <option>Procesador AMD</option>
-          <option>Procesador Intel</option>
-          <option>Board AMD</option>
-          <option>Board Intel</option>
-          <option>Caja</option>
-          <option>Ram DDR4</option>
-          <option>Ram DDR3</option>
-        </select>
-        <span>Selected: {{ selected }}</span>
-        <br />
-        <input type="number" v-model="product_in" placeholder="Precio" />
-        <br />
-        <button type="submit">Registrar</button>
-        <button type="submit">Eliminar</button>
-        <button type="submit">Actualizar</button>
-      </form>
-    </div>
+  <div class="product-container pad-1">
+<div @click="addProdModal()">
+          <i class="fas fa-plus fa-2x"></i>
+</div>
+    <product-admin-card
+      v-for="(product, key) in allProducts"
+      :key="key"
+      :product_Id="product.product_Id"
+      :name="product.name"
+      :description="product.description"
+      :quantity="product.quantity"
+      :category="product.category"
+      :price="product.price"
+    >
+    </product-admin-card>
+  </div>
+  <div class="modal" v-if="prodModal">
+    <div class="modal__close" @click="addProdModal()">X</div>
+    <product-form> </product-form>
   </div>
 </template>
 
 <script>
+import ProductForm from "../components/ProductForm.vue";
+import ProductAdminCard from "../components/ProductAdminCard.vue";
 import gql from "graphql-tag";
-import jwt_decode from "jwt-decode";
 
 export default {
-  name: "CreateProduct",
+  name: "Product",
 
-  data: function () {
-    return {
-      product_in: {
-        name: "",
-        description: "",
-        quantity: "",
-        category: "",
-        price: "",
-      },
-    };
+  components: {
+    ProductAdminCard,
+    ProductForm,
+  },
+  data() {
+    return { prodModal: false };
+  },
+  created() {
+    this.$apollo.queries.allProducts.refresh();
   },
   methods: {
-    processCreateProduct: async function () {
-      await this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation ($createProductProduct: CreateProduct!) {
-              createProduct(product: $createProductProduct) {
-                name
-                description
-                quantity
-                category
-                price
-              }
-            }
-          `,
-          variables: {
-            createProductProduct: this.product_in,
-          },
-        })
-        .then((result) => {}).catch;
+    addProdModal() {
+      this.prodModal = !this.prodModal;
+      this.$apollo.queries.allProducts.refresh()
+    },
+  },
+  apollo: {
+    allProducts: {
+      query: gql`
+        query {
+          allProducts {
+            product_Id
+            name
+            description
+            quantity
+            category
+            price
+          }
+        }
+      `,
     },
   },
 };

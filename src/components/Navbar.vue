@@ -7,7 +7,8 @@
     <router-link to="/Home"><i class="fas fa-home fa-2x icon"></i></router-link> 
     <router-link to="/shops"><i class="fas fa-shopping-bag fa-2x icon"></i></router-link> 
     <router-link to="/cart"><i class="fas fa-cart-plus fa-2x icon"></i></router-link> 
-    <router-link to="/profile"><i class="fas fa-user fa-2x icon"></i></router-link> 
+    <router-link to="/profile"><i class="fas fa-user fa-2x icon"></i></router-link>
+    <router-link to="/product"><i class="fas fa-box-open fa-2x icon"></i></router-link>
      <a @click="logout"><i class="fas fa-sign-out-alt fa-2x icon"></i></a>
     </div>
   </div>
