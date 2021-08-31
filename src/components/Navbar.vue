@@ -9,6 +9,7 @@
     <router-link to="/cart">Carrito</router-link> 
     <router-link to="/profile">Perfil</router-link> 
     <router-link to="/about">About</router-link>
+    <router-link to="/product">Producto</router-link>
      <a @click="logout">Logout</a>
     </div>
   </div>
