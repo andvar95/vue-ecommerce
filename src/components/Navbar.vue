@@ -1,6 +1,6 @@
 <template>
  <div id="nav" class="navbar">
-    <div class="logo">Logo </div>
+    <div class="logo"><i class="fas fa-laptop-code fa-3x"></i></div>
     
     <div v-if="Auth"  class="options"> 
     <a v-if="Admin"><i class="fas fa-users-cog fa-2x icon"></i></a>
@@ -48,7 +48,7 @@ a:hover{
 .navbar{
   display: flex;
   justify-content: space-between;
-  background-color:#009999 ;
+  background-color:#000202 ;
   color:white;
   position: fixed;
   width:100%;
