@@ -120,6 +120,10 @@ input[type=number]{
        color:white;
    }
 
+   .cart-button:disabled{
+       background-color: rgba(128, 128, 128, 0.733);
+   }
+
    button:hover{
        background-color:#5c5cdd ;
    }

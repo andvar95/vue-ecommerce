@@ -38,7 +38,12 @@
         <label for="direccion"> Dirección </label>
         <input v-model="profile_user.address" type="text" id="direccion" />
         </div>
+        <div class="profile-buttons">
+          <button @click="modalPass()">Cambiar Contraseña</button>
           <button class="profile-button" type="submit">Guardar Datos</button>
+
+        </div>
+          
         </form>
       
       </div>
@@ -49,21 +54,35 @@
   </div>
 
 
+  <div class="modal" v-if="passModal">
+    <div class="modal__close" @click="modalPass()">X</div>  
+  
+      <cambiar-password> </cambiar-password>
+    </div>
+
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import CambiarPassword from '../components/CambiarPassword.vue';
 export default {
+  components:{
+    CambiarPassword
+  },
   data(){
   return{
       profile_user:{},
-      myPass:''
+      myPass:'',
+      passModal:false
     }
   },
   created(){
     this.init()
   },
   methods:{
+    modalPass(){
+      this.passModal = !this.passModal
+    },
     async updateUser(){
       console.log(this.profile_user);
       this.profile_user.password = this.myPass
@@ -85,6 +104,7 @@ export default {
     }
     }).then((data)=>{
       console.log("d",data);
+
       this.$apollo.queries.getUserById.refresh()
      
       })
@@ -124,18 +144,32 @@ export default {
 
 <style>
 
+
+.profile-buttons{
+  padding:5% 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile-buttons button{
+  border:none;
+  padding:15px 20px;
+  background-color:#3838e4; 
+  color:white;
+  border-radius: 5px;
+  font-size: 1.4rem;
+}
+
 .profile-container{
   background-color: white;
   border-radius: 30px;
   width:50vw;
-  height: 80vh;
+  height: 90vh;
   margin:2% auto;
   display:flex;
 }
 
-.profile-button{
 
-}
 .profile-photo{
   width:20%;
   padding: 2%;
@@ -147,7 +181,7 @@ export default {
 
 .profile-information{
   width: 70%;
-  padding: 2%;
+  padding: 5%;
 
 }
 
