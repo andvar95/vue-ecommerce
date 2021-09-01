@@ -18,7 +18,8 @@
           placeholder="Cantidad"
         />
         <br />
-        <select v-model="product_in.category" placeholder="Cantidad">
+        <select v-model="product_in.category"  value="product_in.category" placeholder="Cantidad">
+          <option selected disabled hidden>Choose here</option>
           <option>Procesador AMD</option>
           <option>Procesador Intel</option>
           <option>Board AMD</option>
@@ -45,6 +46,7 @@ import jwt_decode from "jwt-decode";
 export default {
   name: "CreateProduct",
   props: {
+    url:String,
     product_Id: String,
     name: String,
     description: String,
@@ -55,6 +57,7 @@ export default {
   data: function () {
     return {
       product_in: {
+        url:"",
         name: "",
         description: "",
         quantity: "",
@@ -64,6 +67,7 @@ export default {
     };
   },
   created() {
+    this.product_in.url = this.url;
     this.product_in.name = this.name;
     this.product_in.description = this.description;
     this.product_in.quantity = this.quantity;
@@ -78,6 +82,7 @@ export default {
           mutation: gql`
             mutation ($createProductProduct: CreateProduct!) {
               createProduct(product: $createProductProduct) {
+                url
                 name
                 description
                 quantity
@@ -90,7 +95,10 @@ export default {
             createProductProduct: this.product_in,
           },
         })
-        .then((result) => {}).catch;
+        .then((result) => {
+            this.$emit('closeModal')
+
+        }).catch;
     }else{this.processUpdProduct()}},
     processUpdProduct: async function () {
       this.product_in.product_Id = this.product_Id
@@ -105,6 +113,7 @@ export default {
                 product_Id: $updProductbyIdProductId
                 product: $updProductbyIdProduct
               ) {
+                url
                 product_Id
                 name
                 description
@@ -119,7 +128,10 @@ export default {
             updProductbyIdProduct: this.product_in,
           },
         })
-        .then((result) => {}).catch;
+        .then((result) => {
+          
+          this.$emit('closeModal')
+        }).catch;
     },
   },
 };

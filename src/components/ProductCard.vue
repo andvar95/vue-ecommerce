@@ -2,7 +2,8 @@
 
 <div class="product">
     
-    <div><img v-bind:src="image"> </div>
+    <div><img  class="img-product" v-if="url" v-bind:src="url">
+    <img class="img-product" v-if="!url" v-bind:src="image"> </div>
     <h5 @click="goToProduct(id)">{{name}}</h5>
     <div v-if="quantity==0">No hay Stock </div>
     <div v-else>Stock: {{quantity}}</div>
@@ -22,6 +23,7 @@ import gql from 'graphql-tag';
 export default {
     name:"ProductCard",
     props:{
+        url:String,
         id:String,
         name:String,
         quantity:Number,
@@ -53,6 +55,7 @@ export default {
                     date
                     total
                     detailProducts {
+                    url
                     idProduct
                     name
                     quantity
@@ -64,6 +67,7 @@ export default {
                variables:{
                    addCartId:localStorage.getItem('userId'),
                    addCartInputDetailProducts: {
+                            url:this.url,
                             idProduct: this.id,
                             name:this.name,
                             quantity: this.cartQuantity,
@@ -88,8 +92,13 @@ export default {
 <style>
 
 .product{
-    width:20%;   
+    width:300px;   
     background-color: white;
+}
+.img-product{
+    width:300px;
+    height: 400px;
+
 }
 
 .cart-add{

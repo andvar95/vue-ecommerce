@@ -19,12 +19,15 @@
   <div class="modal" v-if="prodModal">
     <div class="modal__close" @click="editProdModal()">X</div>
     <product-form
+      :url="url"
       :product_Id="product_Id"
       :name="name"
       :description="description"
       :quantity="quantity"
       :category="category"
       :price="price"
+      @closeModal="editProdModal"
+  
     >
     </product-form>
   </div>
@@ -36,6 +39,7 @@ import gql from "graphql-tag";
 export default {
   name: "Product",
   props: {
+    url:String,
     product_Id: String,
     name: String,
     description: String,
@@ -54,9 +58,12 @@ export default {
   methods: {
     editProdModal() {
       this.prodModal = !this.prodModal;
+      this.$emit('refreshProducts')
     },
+  
     closeModal() {
       this.prodModal = false;
+ 
     },
     deleteProd: async function () {
       await this.$apollo
@@ -64,6 +71,7 @@ export default {
           mutation: gql`
             mutation Mutation($deleteProductProductId: String!) {
                 deleteProduct(product_Id: $deleteProductProductId) {
+                    url
                     product_Id
                     name
                     description
@@ -77,7 +85,10 @@ export default {
             deleteProductProductId: this.product_Id,
           },
         })
-        .then((result) => {}).catch;
+        .then((result) => {
+this.$emit('refreshProducts')
+
+        }).catch;
     },
   },
 };

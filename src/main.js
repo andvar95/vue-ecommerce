@@ -16,7 +16,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 const emitter = mitt();
 
 const httpLink = createHttpLink({
-  uri: "https://api-gateway-ecommerce.herokuapp.com/",
+  uri: "https://api-gateway-ecommerce.herokuapp.com/"
 });
 
 

@@ -1,17 +1,19 @@
 <template>
   <div class="product-container pad-1">
-<div @click="addProdModal()">
+<div class="add-button" @click="addProdModal()">
           <i class="fas fa-plus fa-2x"></i>
 </div>
     <product-admin-card
       v-for="(product, key) in allProducts"
       :key="key"
+      :url="product.url"
       :product_Id="product.product_Id"
       :name="product.name"
       :description="product.description"
       :quantity="product.quantity"
       :category="product.category"
       :price="product.price"
+      @refreshProducts="refreshProducts"
     >
     </product-admin-card>
   </div>
@@ -40,6 +42,10 @@ export default {
     this.$apollo.queries.allProducts.refresh();
   },
   methods: {
+    refreshProducts(){
+      console.log("refresh");
+ this.$apollo.queries.allProducts.refresh()
+    },
     addProdModal() {
       this.prodModal = !this.prodModal;
       this.$apollo.queries.allProducts.refresh()
@@ -50,6 +56,7 @@ export default {
       query: gql`
         query {
           allProducts {
+            url
             product_Id
             name
             description
@@ -59,10 +66,18 @@ export default {
           }
         }
       `,
+      fetchPolicy:'network-only'
     },
   },
 };
 </script>
 
 <style>
+
+.add-button{
+  padding: 2% 0;
+ 
+}
+
+
 </style>

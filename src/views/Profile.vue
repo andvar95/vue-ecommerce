@@ -128,7 +128,8 @@ export default {
     }
     `,variables:{
       getUserByIdId:localStorage.getItem('userId')
-    }
+    },
+    fetchPolicty:'network-only'
     }).then((data)=>{
       console.log("d",data);
       this.profile_user = JSON.parse(JSON.stringify(data.data.getUserById))

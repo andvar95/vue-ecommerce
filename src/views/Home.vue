@@ -3,6 +3,7 @@
     <div class="product-container" >
       <product-card
       v-for="(product,key) in allProducts" :key="key"
+      :url="product.url"
       :id="product.product_Id"
       :name="product.name"
       :quantity="product.quantity"
@@ -43,8 +44,11 @@ export default {
   },
   created(){
     console.log("creado");
-    this.$apollo.queries.allProducts.refresh()
+    this.$apollo.queries.allProducts.refetch()
 
+  },
+  mounted(){
+    this.$apollo.queries.allProducts.refetch()
   },
   methods:{
     addProductCart(event){
@@ -63,6 +67,7 @@ export default {
     allProducts:{
       query: gql `
       query { allProducts {
+        url
         product_Id
         name
         description
@@ -70,7 +75,8 @@ export default {
         category
         price
         }}
-      `
+      `,
+      fetchPolicty:'no-cache'
     }
 
   }
