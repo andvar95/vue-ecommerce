@@ -48,8 +48,7 @@ export default {
            await  this.$apollo.mutate({
                mutation: gql `
                mutation($addCartId: String!, $addCartInputDetailProducts: InputDetailProducts!) {
-                addCart(id: $addCartId, inputDetailProducts: $addCartInputDetailProducts) {
-                
+                addCart(id: $addCartId, inputDetailProducts: $addCartInputDetailProducts) {               
                     userId
                     orderId
                     date
