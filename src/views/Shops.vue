@@ -1,23 +1,35 @@
 <template>
-  <div class="pad-1">Shops</div>
+  <h1 class="pad-1">Shops</h1>
   <div class="order-container">
-    <div v-for="(order, key) in ordersByUserId" :key="key">
-    <div class= "order-p-item"> {{order.orderId}}</div> 
+    <shop-card v-for="(order, key) in ordersByUserId.slice().reverse()" :key="key"
+    :orderId="order.orderId"
+    :date="order.date"
+    :total="order.total"
+    :detailProducts="order.detailProducts"
+    :status="order.status"
+    >
+    <!--div class= "order-p-item"> {{order.orderId}}</div> 
     <div class= "order-p-item"> {{order.date.substring(0,10)}}</div> 
     <div class= "order-p-item"> {{order.total}}</div> 
     <div class= "order-p-item"> {{order.status}}</div>
-    <div>{{order.detailProducts}}</div>
-     <div v-for="(detail, key) in order.detailProducts" :key="key"> {{detail.name}}</div>
-    </div>
+    <div>{{order.detailProducts}}</div> 
+     <div v-for="(detail, key) in order.detailProducts" :key="key"> {{detail.name}}</div> -->
+    </shop-card>
 
   
   </div>
 </template>
 
 <script>
+
+import ShopCard from "../components/ShopCard.vue"
 import gql from "graphql-tag";
 export default {
   name: "Shops",
+
+  components: {
+    ShopCard
+  },
 
   data() {
     return {
