@@ -14,8 +14,7 @@
     </div>
     
 </div>
-  
-    <message-card v-if="messageFlag" :message="messageContent"> </message-card>
+ 
 
 </template>
 
@@ -50,16 +49,8 @@ export default {
     methods:{
         goToProduct(id){
             this.$router.push({path:`/product/${id}`})
-        }
-        ,setMessage(msg){
-                this.messageFlag = true;
-        this.messageContent= msg;
-        setTimeout(() => {
-          this.messageFlag = false;
-          this.messageContent = {};
-        }, 3000);
-
         },
+       
         async addProduct(){
        if(this.cartQuantity>0)  {
            await  this.$apollo.mutate({
@@ -91,7 +82,7 @@ export default {
                             subTotal: this.price*this.cartQuantity} }
            }).then((data)=>{
                console.log(data)
-                    this.setMessage({name:this.name,quantity:this.cartQuantity})
+                    
                     this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
                
           
@@ -101,7 +92,7 @@ export default {
         }
         else{
             console.log("No puedo");
-            this.setMessage({name:this.name,quantity:this.cartQuantity})
+       
              this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
                        
         }
@@ -124,6 +115,7 @@ export default {
 .img-product{
     width:300px;
     height: 400px;
+    border-bottom: 1px solid rgb(156, 156, 156);
 
 }
 

@@ -1,8 +1,11 @@
 <template>
   <div class="home pad-1">    
+
+    <input type="search" class="searcher"  v-model="busqueda" placeholder="Busca tu producto favorito">
+
     <div class="product-container" >
       <product-card
-      v-for="(product,key) in allProducts" :key="key"
+      v-for="(product,key) in filterList" :key="key"
       :url="product.url"
       :id="product.product_Id"
       :name="product.name"
@@ -39,7 +42,17 @@ export default {
     return{
       products:[],
       messageFlag:false,
-      messageContent:{}
+      messageContent:{},
+      busqueda:''
+    }
+  },
+  computed:{
+    filterList(){
+      return this.allProducts.filter(
+        (product)=>{
+          return product.name.toLowerCase().includes(this.busqueda.toLowerCase())
+        }
+      )
     }
   },
   created(){
@@ -93,15 +106,21 @@ export default {
     flex-wrap: wrap;
     width:100vw;
     max-width: 100%;
-  
-   
-  
   }
 
-  .product-container > product-card {
+  .searcher{
+    width:40%;
+    height: 40px;
+    font-size: 1.4rem;
+    border-radius: 5px;
+    outline:none;
+    border:1px solid rgb(128, 125, 125);
+  }
+
+  .product-container > * {
     margin:15px;
     border-radius: 5px;
-     border:1px solid rgb(71, 70, 70);
+     border:1px solid rgb(133, 133, 133);
   }
 
 </style>

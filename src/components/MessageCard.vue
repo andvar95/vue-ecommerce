@@ -69,6 +69,6 @@ export default {
     justify-content: center;
     align-items: center;
     overflow: auto;
-    border:5px solid red;
+    
 }
 </style>

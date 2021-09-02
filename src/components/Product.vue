@@ -18,13 +18,20 @@
       
     </div>
 
+          
+  <message-card v-if="messageFlag" :message="messageContent"> </message-card>
+
        
       
 </template>
 
 <script>
 import gql from 'graphql-tag';
+import MessageCard from '../components/MessageCard.vue';
 export default {
+    components:{
+        MessageCard
+    },
     name:'Product',
     props:{
         id:String,
@@ -37,10 +44,21 @@ export default {
     },
     data(){
         return{
-            cartQuantity:0
+            cartQuantity:0,
+            messageFlag:false,
+            messageContent:{}
         }
     },
     methods:{
+         setMessage(msg){
+                this.messageFlag = true;
+        this.messageContent= msg;
+        setTimeout(() => {
+          this.messageFlag = false;
+          this.messageContent = {};
+        }, 3000);
+
+        },
         async addProduct(){
             console.log(this.cartQuantity);
        if(this.cartQuantity>0)  {
@@ -71,12 +89,12 @@ export default {
                             price: this.price,
                             subTotal: this.price*this.cartQuantity} }
            }).then((data)=>{
-               console.log(data)
+               this.setMessage({name:this.name,quantity:this.cartQuantity})
            }).catch((err)=>console.log(err))
            
         }
         else{
-            console.log("No puedo");
+                         this.setMessage({name:this.name,quantity:this.cartQuantity})
         }
         }
     

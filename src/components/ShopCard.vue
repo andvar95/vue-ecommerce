@@ -1,8 +1,9 @@
 <template>
-   <div class="user-card-container">
+   <div class="user-card-container" v-bind:class="{'no-pad':details}">
     <div class="user-card-item">
+      
       <div class="username-text">
-        {{ orderId }}
+         {{ orderId }}
       </div>
     </div>
 
@@ -25,14 +26,23 @@
  <div v-if="details" class="detailproducts">
      
          <table>
-             <tr class="spacer">
-                 <th>Total: ${{total}}</th>
-                 <th>Creación: {{date.substring(0,10)}}</th>
-             </tr>
+           <tr>
+             <th> <h2> Detalle de Compra</h2></th>
+           </tr>
+
+           <tr  class="spacer">
+             <th> <h3>Producto</h3> </th>
+             <th><h3>Cantidad</h3> </th>
+           </tr>
+             
             <tr class="spacer" v-for="(detail, key) in detailProducts" :key="key">
                 <th>{{detail.name}}</th>
                 <th>{{detail.quantity}}</th>
             </tr>
+            <tr class="spacer total-shop">
+                 <th >Total: ${{total}}</th>
+                 <th >Creación: {{date.substring(0,10)}}</th>
+             </tr>
          </table>
      </div>
 
@@ -75,11 +85,18 @@ props: {
     color:aliceblue; 
     padding:5px 7px; 
 }
-
+.no-pad{
+  margin: 2% 5% 0 5% !important;
+  border-radius:10px 10px 0 0 !important;
+}
 .card-icons{
     display:flex;
     justify-content:center;
     align-items:center;
+}
+.total-shop th{
+  padding:5% 0;
+  font-size: 1.6rem;
 }
 
 .card-icons div{
@@ -93,6 +110,7 @@ props: {
     background-color:white;
     width:90%;
     margin:0 auto;
+    border-radius: 0 0 10px 10px;    
 }
 
 .spacer{
@@ -102,5 +120,10 @@ props: {
 
 table{
     width:100%;
+    
     }
+  th{
+    width:40%;
+    font-size: 1.2rem; 
+  }
 </style>
