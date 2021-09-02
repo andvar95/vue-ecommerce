@@ -2,7 +2,9 @@
   <div class="cart-container pad-1">
       <div class="cart">
 
-      <h2 class="cart-title">Carrito  </h2>
+      <h2 class="cart-title">
+        
+        <div>Carrito</div>   <div v-if="errorStockMsg" class="errorStockMsg"> Error en el Stock </div>  </h2>
 
     <cart-card
  
@@ -16,6 +18,8 @@
   :status="cart.status"
   @editCart="editCart"
   @deleteCart="deleteCart"
+  @finishCart="finishCart"
+  @errorStock="errorStock"
   
   ></cart-card>
       <div class="empty-cart" v-if="orderByUserAndStatus.length == 0">
@@ -29,7 +33,7 @@
 <script>
 import { gql } from "graphql-tag";
 import CartCard from "../components/CartCard.vue";
-import {addToCart,deleteProduct} from "../helpers/addToCart";
+import {addToCart,deleteProduct,cleanCart} from "../helpers/addToCart";
 export default {
   name: "Cart",
   components:{
@@ -37,6 +41,7 @@ export default {
   },
   data(){
     return{
+      errorStockMsg:false
       
     }
   },
@@ -75,12 +80,21 @@ export default {
 
   },
   methods:{
+    errorStock(){
+      this.errorStockMsg = true
+      setTimeout(()=>{
+        this.errorStockMsg=false
+      },5000)
+    },
+    finishCart(){
+      this.$apollo.queries.orderByUserAndStatus.refresh()
+
+    },
     editCart(data){
       const edited =  addToCart(data,JSON.parse(JSON.stringify(this.orderByUserAndStatus[0])))
     this.updateCart(edited);
    },
    deleteCart(id){
-    
      const deleteProd = deleteProduct(id,JSON.parse(JSON.stringify(this.orderByUserAndStatus[0])))
     this.updateCart(deleteProd);
    },
@@ -107,7 +121,8 @@ export default {
         variables:{
         orderByUserAndStatusId:localStorage.getItem('userId'),
         orderByUserAndStatusStatus:"In Progress"
-       }
+       },
+       fetchPolicy:'network-only'
     }).then((data)=>{
       console.log("d",data);
       this.orderByUserAndStatusId =data.data.orderByUserAndStatus[0]
@@ -117,6 +132,7 @@ export default {
     
   },
   async updateCart(Cart){
+    console.log("Upd");
     console.log(Cart);
     await this.$apollo.mutate({
       mutation: gql`
@@ -143,6 +159,7 @@ export default {
       }
     }).then(
       (data)=> {
+            console.log(data);
            this.$apollo.queries.orderByUserAndStatus.refresh()
       }
     ).catch(
@@ -157,7 +174,14 @@ export default {
 
 <style>
 
+.cart-title{
+  display: flex;
+  justify-content: space-between;
+}
 
+.errorStockMsg{
+  color:red;
+}
 .empty-cart{
   padding:10%;
  

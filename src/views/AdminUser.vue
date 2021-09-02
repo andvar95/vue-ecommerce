@@ -56,8 +56,10 @@ export default {
             phone
             address
             is_active
-            is_superuser}}
-        `
+            is_superuser}
+            }
+        `,
+        fetchPolicy:'network-only'
     }
     }
 

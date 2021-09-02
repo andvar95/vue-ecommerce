@@ -1,13 +1,14 @@
 <template>
  <div id="nav" class="navbar">
-    <div class="logo">Logo </div>
+    <div class="logo"><i class="fas fa-laptop-code fa-3x"></i></div>
     
     <div v-if="Auth"  class="options"> 
     <a v-if="Admin"><i class="fas fa-users-cog fa-2x icon"></i></a>
     <router-link to="/Home"><i class="fas fa-home fa-2x icon"></i></router-link> 
     <router-link to="/shops"><i class="fas fa-shopping-bag fa-2x icon"></i></router-link> 
     <router-link to="/cart"><i class="fas fa-cart-plus fa-2x icon"></i></router-link> 
-    <router-link to="/profile"><i class="fas fa-user fa-2x icon"></i></router-link> 
+    <router-link to="/profile"><i class="fas fa-user fa-2x icon"></i></router-link>
+    <router-link to="/product"><i class="fas fa-box-open fa-2x icon"></i></router-link>
      <a @click="logout"><i class="fas fa-sign-out-alt fa-2x icon"></i></a>
     </div>
   </div>
@@ -47,7 +48,7 @@ a:hover{
 .navbar{
   display: flex;
   justify-content: space-between;
-  background-color:#009999 ;
+  background-color:#000202 ;
   color:white;
   position: fixed;
   width:100%;

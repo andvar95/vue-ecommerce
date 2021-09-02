@@ -1,6 +1,6 @@
 <template>
   <div id="CreateUser" class="auth_user pad-1">
-    <div class="container_auth_user container_reg_user">
+    <div class="container_auth_user ">
 
       <div v-if="error">{{errorMessage}}</div>
       <h3>Registro</h3>
@@ -135,25 +135,13 @@ else{
 </script>
 
 <style>
-.auth_user {
-  margin: 0;
-  padding: 0%;
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
 
 .auth_user h2 {
   color: #283747;
 }
 
 .auth_user h3 {
-    color: #015757;
+    color: #3838e4;;
     text-align: center;
 }
 
@@ -161,7 +149,7 @@ else{
   width: 50%;
 }
 
-.auth_user input {
+.auth_user input, .auth_user select {
   height: 40px;
   width: 150%;
 
@@ -170,14 +158,12 @@ else{
   margin: 5px 0;
 
   border: 1px solid #283747;
-  border-radius: 30px;
+  border-radius: 10px;
   
 }
 
 
-.container_reg_user{
-  height: 80%;
-}
+
 input:focus {
     outline: none;
 }
@@ -187,7 +173,7 @@ input:focus {
   height: 40px;
 
   color: #e5e7e9;
-  background: #009999;
+  background: #3838e4;
   border: 1px solid #e5e7e9;
 
   border-radius: 30px;
@@ -198,7 +184,7 @@ input:focus {
 
 .auth_user button:hover {
   color: #e5e7e9;
-  background: #015757;
+  background: #3838e4;;
   border: 1px solid #283747;
 }
 

@@ -87,7 +87,11 @@ export default {
 
 
 .pad-1{
-  padding: 5% 0;
+  padding: 10% 0;
+}
+
+.pad-10{
+    padding: 30% 0;
 }
 
 </style>

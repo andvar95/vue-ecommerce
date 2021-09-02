@@ -49,4 +49,41 @@ function deleteProduct(idProduct,Cart) {
 
 }
 
-module.exports= {addToCart,deleteProduct}
+
+
+
+function cleanCart(Cart){
+    delete Cart.__typename
+    Cart.detailProducts = Cart.detailProducts.filter((p,i)=>{
+
+        delete Cart.detailProducts[i].__typename
+      
+    }) 
+
+
+  
+    return Cart
+   
+}
+
+
+function cleanDetail(detail){
+
+    let obj = JSON.parse(JSON.stringify(detail))
+    
+
+    obj = obj.map((p,i)=>{
+       delete p.__typename 
+    
+        return p
+        
+      
+    }) 
+
+
+return obj
+
+
+
+}
+module.exports= {addToCart,deleteProduct,cleanCart,cleanDetail}

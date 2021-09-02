@@ -86,8 +86,7 @@ export default {
 
 <style>
 .auth_user {
-  margin: 0;
-  padding: 0%;
+ 
   height: 100%;
   width: 100%;
 
@@ -102,7 +101,7 @@ export default {
   border:1px solid rgb(212, 212, 212);
   border-radius: 10px;
   width: 30%;
-  height: 60%;
+ 
 
   display: flex;
   flex-direction: column;
@@ -116,7 +115,7 @@ export default {
 }
 
 .auth_user h3 {
-    color: #015757;
+    color: #3838e4;;
 }
 
 .auth_user form {
@@ -160,7 +159,7 @@ input:focus {
 
 .auth_user button:hover {
   color: #e5e7e9;
-  background: #015757;
+  background: #3838e4;;
   border: 1px solid #283747;
 }
 
