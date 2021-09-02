@@ -1,5 +1,6 @@
 <template>
-  <h1 class="pad-1">Shops</h1>
+<div class="pad-1">
+  <h1 >Shops</h1>
   <div class="order-container">
     <shop-card v-for="(order, key) in ordersByUserId.slice().reverse()" :key="key"
     :orderId="order.orderId"
@@ -18,6 +19,7 @@
 
   
   </div>
+   </div>
 </template>
 
 <script>

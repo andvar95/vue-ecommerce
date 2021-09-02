@@ -57,7 +57,7 @@ const routes = [
     component:Product
   },
   {
-    path:'/admin/user',
+    path:'/adminuser',
     name:'AdminUser',
     component:AdminUser
   }

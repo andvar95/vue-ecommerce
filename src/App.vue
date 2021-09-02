@@ -2,7 +2,7 @@
  
  <navbar :Admin="admin" :Auth="isAuth" @logout="isAuth = false"  ></navbar>
 
-  <router-view @log="isAuth = true" />
+  <router-view @log="login" />
 
   
 </template>
@@ -37,6 +37,10 @@ export default {
   },
 
     methods: {
+    login(){
+    this.isAuth = true
+    this.refreshToken()
+    } ,
     async refreshToken() {
       await this.$apollo.mutate({
         mutation: gql `
@@ -51,9 +55,10 @@ export default {
         }
       }).then(result => {
         console.log(result.data.refreshToken)
-        this.isAuth = true
         localStorage.setItem('access', result.data.refreshToken.access)
         this.admin = jwt_decode(localStorage.getItem('access')).admin
+        this.isAuth = true
+       
 
         
         

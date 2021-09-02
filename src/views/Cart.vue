@@ -68,7 +68,6 @@ export default {
         }
         status
         }
-        
         }`,
         variables:{
         orderByUserAndStatusId:localStorage.getItem('userId'),

@@ -15,14 +15,14 @@
           {{status}}
         </div>
         <div @click="ShowDetails()">
-        <div v-if="!detail"><i  class="fas fa-arrow-down fa-2x"></i></div>
-        <div v-if="detail"><i  class="fas fa-arrow-up fa-2x"></i></div>
+        <div v-if="!details"><i  class="fas fa-arrow-down fa-2x"></i></div>
+        <div v-if="details"><i  class="fas fa-arrow-up fa-2x"></i></div>
           
         </div>
       </div>
     </div>
   </div>
- <div v-if="detail" class="detailproducts">
+ <div v-if="details" class="detailproducts">
      
          <table>
              <tr class="spacer">
@@ -42,12 +42,14 @@
 export default {
 
 name: "ShopCard",
-data: {
-    detail:false
+data() {
+    return{
+      details:false
+    }
 },
 methods: {
     ShowDetails(){
-        this.detail=!this.detail;
+        this.details=!this.details;
     }
 },
 

@@ -1,7 +1,12 @@
 <template>
 
     <div class="message_container">
-        {{finalMessage}}
+
+        <div>
+            <i v-if="type ==='User'" class="fas fa-user fa-2x icon-cart">  </i>
+            <i v-if="type !== 'User'" class="fas fa-shopping-bag fa-2x icon-cart">
+                </i></div>
+        <div>{{finalMessage}}</div>
     </div>
   
 </template>
@@ -10,7 +15,8 @@
 export default {
     name:'MessageCard',
     props:{
-        message:{}
+        message:{},
+        type:String
     },
     data(){
         return{
@@ -23,8 +29,12 @@ export default {
     },
     created(){
         console.log(this.message);
-
-        if(this.message.quantity>0) 
+        console.log(this.type);
+        if(this.type === 'User')
+        {
+            this.finalMessage = this.message.msg
+        }
+       else if(this.message.quantity>0) 
         {
             this.quantity = this.message.quantity
             this.product = this.message.name
@@ -33,6 +43,7 @@ export default {
         else if(this.message.quantity == 0){
             this.finalMessage = 'Debes indicar la cantidad'
         }
+
     }   
 
 
@@ -41,11 +52,14 @@ export default {
 
 <style>
 
+.icon-cart{
+    padding:1px;
+}
 .message_container{
     position: fixed;
     background-color: white;
     color: black;
-    padding:20px;
+    padding:10px;
     width:20vw;
     top: 0;
     right: 0;
@@ -55,5 +69,6 @@ export default {
     justify-content: center;
     align-items: center;
     overflow: auto;
+    border:5px solid red;
 }
 </style>

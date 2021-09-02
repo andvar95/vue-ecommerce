@@ -98,10 +98,10 @@ export default {
   
   }
 
-  .product-container > * {
+  .product-container > product-card {
     margin:15px;
     border-radius: 5px;
-     border:1px solid rgb(129, 129, 129);
+     border:1px solid rgb(71, 70, 70);
   }
 
 </style>

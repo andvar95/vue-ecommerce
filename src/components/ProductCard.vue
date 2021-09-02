@@ -15,12 +15,18 @@
     
 </div>
   
+    <message-card v-if="messageFlag" :message="messageContent"> </message-card>
+
 </template>
 
 <script>
 
 import gql from 'graphql-tag';
+import MessageCard from "../components/MessageCard.vue";
 export default {
+    components:{
+        MessageCard
+    },
     name:"ProductCard",
     props:{
         url:String,
@@ -35,13 +41,24 @@ export default {
     data(){
         return{
             cartQuantity:0,
-            image:"https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg"
+            image:"https://image.made-in-china.com/202f0j10SmRaBwqoSbrO/5-2-Inch-CDMA-Smart-Phone-Cheap-Cell-Phone.jpg",
+            messageFlag:false,
+            messageContent:{}
         }
 
     },
     methods:{
         goToProduct(id){
             this.$router.push({path:`/product/${id}`})
+        }
+        ,setMessage(msg){
+                this.messageFlag = true;
+        this.messageContent= msg;
+        setTimeout(() => {
+          this.messageFlag = false;
+          this.messageContent = {};
+        }, 3000);
+
         },
         async addProduct(){
        if(this.cartQuantity>0)  {
@@ -74,13 +91,19 @@ export default {
                             subTotal: this.price*this.cartQuantity} }
            }).then((data)=>{
                console.log(data)
+                    this.setMessage({name:this.name,quantity:this.cartQuantity})
                     this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
-           }).catch((err)=>console.log(err))
+               
+          
+          
+          }).catch((err)=>console.log(err))
            
         }
         else{
             console.log("No puedo");
+            this.setMessage({name:this.name,quantity:this.cartQuantity})
              this.$emit('addProductCart',{name:this.name,quantity:this.cartQuantity})
+                       
         }
         }
     }
@@ -93,6 +116,10 @@ export default {
 .product{
     width:300px;   
     background-color: white;
+    margin:20px;
+    border-radius: 10px;
+    border:1px solid gray;
+  
 }
 .img-product{
     width:300px;
