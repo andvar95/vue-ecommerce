@@ -1,29 +1,23 @@
 <template>
   <div v-for="(detail, key) in detailProducts" :key="key" class="cart-products">
+    <div class="product-name">{{ detail.name }}</div>
+    <div class="product-cost">Precio:${{ detail.price }}</div>
 
+    <div class="product-quantity">
+      Cantidad:
+      <input
+        type="number"
+        min="0"
+        v-model="detail.quantity"
+        v-on:input="updateProduct($event, detail.idProduct)"
+      />
+    </div>
 
-      <div class="product-name">{{ detail.name }}</div>
-      <div class="product-cost"> Precio:${{ detail.price }}</div>
-    
-   
-        <div class="product-quantity">
-          Cantidad:
-          <input
-            type="number"
-            min="0"
-            v-model="detail.quantity"
-            v-on:input="updateProduct($event, detail.idProduct)"
-          />
-        </div>
+    <div class="product-subtotal">Subtotal:{{ detail.subTotal }}</div>
 
-        <div class="product-subtotal">Subtotal:{{ detail.subTotal }}</div>
-      
-      
-        <div class="product-delete" v-on:click="deleteProduct(detail.idProduct)">
-          <i class="fas fa-trash-alt fa-2x delete-icon"></i>
-        </div>
-      
-   
+    <div class="product-delete" v-on:click="deleteProduct(detail.idProduct)">
+      <i class="fas fa-trash-alt fa-2x delete-icon"></i>
+    </div>
   </div>
 
   <div class="cart-products">
@@ -76,15 +70,12 @@ export default {
           },
         })
         .then((res) => {
-        
-        if(res.data.finishOrder.response.includes('No hay')) this.$emit('errorStock')
-        else this.$emit("finishCart");
+          if (res.data.finishOrder.response.includes("No hay"))
+            this.$emit("errorStock");
+          else this.$emit("finishCart");
           console.log(res);
         })
-        .catch((err) => {
-            
-          
-        });
+        .catch((err) => {});
     },
     updateProduct(event, id) {
       console.log(event.target.value);
@@ -124,7 +115,7 @@ export default {
   border-radius: 5px;
 }
 
-.delete-icon{
+.delete-icon {
   padding: 0 2px;
 }
 
@@ -154,31 +145,30 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:3% 0;
+  padding: 3% 0;
 }
 
-
-.product-name{
-  width:30%;
+.product-name {
+  width: 25%;
 }
 
-.product-cost{
-  width:10%;
-}
-
-.product-quantity{
-  padding:0 2%;
-  width:30%;
-}
-.product-quantity input{
-  height: 30px;
-  width:90px
-}
-.product-subtotal{
+.product-cost {
   width: 20%;
 }
-.product-delete{
-  width:10%;
-}
 
+.product-quantity {
+  padding: 0;
+  width: 25%;
+}
+.product-quantity input {
+  height: 30px;
+  width: 70px;
+  font-size: 1.1rem;
+}
+.product-subtotal {
+  width: 20%;
+}
+.product-delete {
+  width: 10%;
+}
 </style>

@@ -88,8 +88,7 @@ export default {
       console.log(this.myPass);
 
       if (!this.myPass) {
-        this.sendMessage("Ingresa tu contraseña para actualizar")
-        
+        this.sendMessage("Ingresa tu contraseña para actualizar");
       } else {
         await this.$apollo
           .mutate({
@@ -112,23 +111,20 @@ export default {
             },
           })
           .then((data) => {
-
-            this.sendMessage("Datos actualizados")
-            
+            this.sendMessage("Datos actualizados");
           })
-          .catch((err) =>{
-
+          .catch((err) => {
             this.sendMessage("Contraseña errónea");
           });
       }
     },
-    sendMessage(msg){
-        this.messageFlag = true;
-        this.messageContent.msg = msg;
-        setTimeout(() => {
-          this.messageFlag = false;
-          this.messageContent.msg = "";
-        }, 3000);
+    sendMessage(msg) {
+      this.messageFlag = true;
+      this.messageContent.msg = msg;
+      setTimeout(() => {
+        this.messageFlag = false;
+        this.messageContent.msg = "";
+      }, 3000);
     },
     async init() {
       await this.$apollo
@@ -152,10 +148,10 @@ export default {
           fetchPolicty: "network-only",
         })
         .then((data) => {
-          console.log("d", data);
+
           this.profile_user = JSON.parse(JSON.stringify(data.data.getUserById));
         })
-        .catch((err) => console.log("erro", err));
+        .catch((err) =>err);
     },
   },
 };

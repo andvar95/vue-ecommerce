@@ -9,7 +9,8 @@
     <div class="user-card-item">
       <div class="user-card-icons">
         <div @click="deleteProd()">
-          <i class="fas fa-trash-alt fa-2x"></i></div>
+          <i class="fas fa-trash-alt fa-2x"></i>
+        </div>
         <div @click="editProdModal()">
           <i class="fas fa-pencil-alt fa-2x"></i>
         </div>
@@ -27,7 +28,6 @@
       :category="category"
       :price="price"
       @closeModal="editProdModal"
-  
     >
     </product-form>
   </div>
@@ -39,7 +39,7 @@ import gql from "graphql-tag";
 export default {
   name: "Product",
   props: {
-    url:String,
+    url: String,
     product_Id: String,
     name: String,
     description: String,
@@ -53,32 +53,30 @@ export default {
   data() {
     return { prodModal: false };
   },
-  created() {
-  },
+  created() {},
   methods: {
     editProdModal() {
       this.prodModal = !this.prodModal;
-      this.$emit('refreshProducts')
+      this.$emit("refreshProducts");
     },
-  
+
     closeModal() {
       this.prodModal = false;
- 
     },
-    deleteProd: async function () {
+    deleteProd: async function() {
       await this.$apollo
         .mutate({
           mutation: gql`
             mutation Mutation($deleteProductProductId: String!) {
-                deleteProduct(product_Id: $deleteProductProductId) {
-                    url
-                    product_Id
-                    name
-                    description
-                    quantity
-                    price
-                    category
-                }
+              deleteProduct(product_Id: $deleteProductProductId) {
+                url
+                product_Id
+                name
+                description
+                quantity
+                price
+                category
+              }
             }
           `,
           variables: {
@@ -86,13 +84,11 @@ export default {
           },
         })
         .then((result) => {
-this.$emit('refreshProducts')
-
+          this.$emit("refreshProducts");
         }).catch;
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

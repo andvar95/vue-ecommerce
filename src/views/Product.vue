@@ -1,8 +1,8 @@
 <template>
   <div class="product-container pad-1">
-<div class="add-button" @click="addProdModal()">
-          <i class="fas fa-plus fa-2x"></i>
-</div>
+    <div class="add-button" @click="addProdModal()">
+      <i class="fas fa-plus fa-2x"></i>
+    </div>
     <product-admin-card
       v-for="(product, key) in allProducts"
       :key="key"
@@ -42,13 +42,13 @@ export default {
     this.$apollo.queries.allProducts.refresh();
   },
   methods: {
-    refreshProducts(){
+    refreshProducts() {
       console.log("refresh");
- this.$apollo.queries.allProducts.refresh()
+      this.$apollo.queries.allProducts.refresh();
     },
     addProdModal() {
       this.prodModal = !this.prodModal;
-      this.$apollo.queries.allProducts.refresh()
+      this.$apollo.queries.allProducts.refresh();
     },
   },
   apollo: {
@@ -66,18 +66,14 @@ export default {
           }
         }
       `,
-      fetchPolicy:'network-only'
+      fetchPolicy: "network-only",
     },
   },
 };
 </script>
 
 <style>
-
-.add-button{
+.add-button {
   padding: 2% 0;
- 
 }
-
-
 </style>

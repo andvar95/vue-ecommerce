@@ -18,7 +18,11 @@
           placeholder="Cantidad"
         />
         <br />
-        <select v-model="product_in.category"  value="product_in.category" placeholder="Cantidad">
+        <select
+          v-model="product_in.category"
+          value="product_in.category"
+          placeholder="Cantidad"
+        >
           <option selected disabled hidden>Choose here</option>
           <option>Procesador AMD</option>
           <option>Procesador Intel</option>
@@ -46,7 +50,7 @@ import jwt_decode from "jwt-decode";
 export default {
   name: "CreateProduct",
   props: {
-    url:String,
+    url: String,
     product_Id: String,
     name: String,
     description: String,
@@ -54,10 +58,10 @@ export default {
     category: String,
     price: Number,
   },
-  data: function () {
+  data: function() {
     return {
       product_in: {
-        url:"",
+        url: "",
         name: "",
         description: "",
         quantity: "",
@@ -75,33 +79,35 @@ export default {
     this.product_in.price = this.price;
   },
   methods: {
-    processCreateProduct: async function () {
-      if(!this.product_Id){
-      await this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation ($createProductProduct: CreateProduct!) {
-              createProduct(product: $createProductProduct) {
-                url
-                name
-                description
-                quantity
-                category
-                price
+    processCreateProduct: async function() {
+      if (!this.product_Id) {
+        await this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation($createProductProduct: CreateProduct!) {
+                createProduct(product: $createProductProduct) {
+                  url
+                  name
+                  description
+                  quantity
+                  category
+                  price
+                }
               }
-            }
-          `,
-          variables: {
-            createProductProduct: this.product_in,
-          },
-        })
-        .then((result) => {
-            this.$emit('closeModal')
-
-        }).catch;
-    }else{this.processUpdProduct()}},
-    processUpdProduct: async function () {
-      this.product_in.product_Id = this.product_Id
+            `,
+            variables: {
+              createProductProduct: this.product_in,
+            },
+          })
+          .then((result) => {
+            this.$emit("closeModal");
+          }).catch;
+      } else {
+        this.processUpdProduct();
+      }
+    },
+    processUpdProduct: async function() {
+      this.product_in.product_Id = this.product_Id;
       await this.$apollo
         .mutate({
           mutation: gql`
@@ -129,13 +135,11 @@ export default {
           },
         })
         .then((result) => {
-          
-          this.$emit('closeModal')
+          this.$emit("closeModal");
         }).catch;
     },
   },
 };
 </script>
- 
-<style>
-</style>
+
+<style></style>

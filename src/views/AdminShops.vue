@@ -1,9 +1,9 @@
 <template>
   <div class="pad-1">
-    <h1>Shops</h1>
+    <h1>Compras</h1>
     <div class="order-container">
       <shop-card
-        v-for="(order, key) in ordersByUserId.slice().reverse()"
+        v-for="(order, key) in getOrders.slice().reverse()"
         :key="key"
         :orderId="order.orderId"
         :date="order.date"
@@ -28,32 +28,35 @@ export default {
 
   data() {
     return {
-      ordersByUserId: [],
+      getOrders: [],
     };
   },
   created() {
     console.log("creado");
-    this.$apollo.queries.ordersByUserId.refresh();
+    this.$apollo.queries.getOrders.refetch();
   },
   apollo: {
-    ordersByUserId: {
+    getOrders: {
       query: gql`
-        query($ordersByUserIdId: String!) {
-          ordersByUserId(id: $ordersByUserIdId) {
-            orderId
-            date
-            total
-            detailProducts {
-              name
-              quantity
-            }
-            status
-          }
-        }
+        query Query {
+  getOrders {
+    userId
+    orderId
+    date
+    total
+    detailProducts {
+      subTotal
+      price
+      quantity
+      name
+      idProduct
+      url
+    }
+    status
+    finishDate
+  }
+}
       `,
-      variables: {
-        ordersByUserIdId: localStorage.getItem("userId"),
-      },
       fetchPolicy: "network-only",
     },
   },

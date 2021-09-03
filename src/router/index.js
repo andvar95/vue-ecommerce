@@ -8,6 +8,7 @@ import Shops from "../views/Shops.vue";
 import Cart from "../views/Cart.vue";
 import Product from "../views/Product.vue";
 import AdminUser from "../views/AdminUser.vue";
+import AdminShops from "../views/AdminShops.vue";
 
 const routes = [
   {
@@ -60,6 +61,11 @@ const routes = [
     path:'/adminuser',
     name:'AdminUser',
     component:AdminUser
+  },
+  {
+    path:'/adminshops',
+    name:'AdminShops',
+    component:AdminShops
   }
 
 ]

@@ -3,6 +3,8 @@
     <div class="container_auth_user">
       <h3>Inicio de sesión</h3>
 
+      <div v-if="error" class="error">Error con usuario o contraseña</div>
+
       <form v-on:submit.prevent="processAuthUser">
         <input type="text" v-model="user_in.username" placeholder="Usuario" />
         <br />
@@ -31,7 +33,8 @@ export default {
       user_in: {
         username: "",
         password: "",
-      }
+      },
+      error:false
     }
   },
   methods: {
@@ -64,7 +67,11 @@ export default {
 
         
         }).catch((error) => {
-            alert("El usuario y/o contraseña son incorrectos")
+            this.error = true
+
+            setTimeout(()=>{
+                this.error = false
+            },3000)
         });
     },
     setUserData:function(data){
@@ -85,6 +92,9 @@ export default {
 </script>
 
 <style>
+.error{
+  color:red;
+}
 .auth_user {
  
   height: 100%;
